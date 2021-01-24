@@ -40,7 +40,7 @@ class Product(models.Model):
 class ProductSpecification(models.Model):
     name = models.CharField(max_length=255)
     value = models.CharField(max_length=400)
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='specification')
 
     def __str__(self):
         return self.name
@@ -48,7 +48,7 @@ class ProductSpecification(models.Model):
 
 class ProductImage(models.Model):
     image = models.ImageField(upload_to='product')
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='images')
 
     def __str__(self):
         return self.image
