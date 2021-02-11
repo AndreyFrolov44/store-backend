@@ -27,10 +27,15 @@ class Product(models.Model):
     price = models.DecimalField(max_digits=6, decimal_places=0)
     sale = models.PositiveIntegerField(blank=True, null=True)
     priceSale = models.DecimalField(max_digits=6, decimal_places=0, blank=True, null=True)
+    description = models.TextField()
+    related_products = models.ManyToManyField('self', blank=True, related_name='related_products')
     image = models.ImageField(upload_to='product')
     available = models.BooleanField(default=True)
     newProduct = models.BooleanField(default=False)
     topSale = models.BooleanField(default=False)
+    banner = models.BooleanField(default=False)
+    banner_image = models.ImageField(upload_to='product', blank=True, null=True)
+    latest = models.BooleanField(default=False)
     slug = models.SlugField()
 
     def __str__(self):
@@ -49,9 +54,6 @@ class ProductSpecification(models.Model):
 class ProductImage(models.Model):
     image = models.ImageField(upload_to='product')
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='images')
-
-    def __str__(self):
-        return self.image
 
 
 class Cart(models.Model):

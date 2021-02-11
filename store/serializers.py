@@ -12,7 +12,7 @@ class SpecificationSerializer(serializers.ModelSerializer):
 class ImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProductImage
-        fields = ('name',)
+        fields = ('image',)
 
 
 class ProductListSerializer(serializers.ModelSerializer):
@@ -21,7 +21,7 @@ class ProductListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Product
-        exclude = ('available', 'newProduct', 'topSale',)
+        exclude = ('available', 'newProduct', 'topSale', 'description', 'related_products', 'banner', 'latest',)
 
 
 class ProductDetailSerializer(serializers.ModelSerializer):
@@ -29,6 +29,7 @@ class ProductDetailSerializer(serializers.ModelSerializer):
     images = ImageSerializer(many=True)
     category = serializers.SlugRelatedField(slug_field='name', read_only=True)
     brand = serializers.SlugRelatedField(slug_field='name', read_only=True)
+    related_products = ProductListSerializer(many=True)
 
     class Meta:
         model = Product
